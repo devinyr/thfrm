@@ -1,4 +1,4 @@
-from django.contrib.auth import login, authenticate, forms
+from django.contrib.auth import login, authenticate, forms, logout
 from django.shortcuts import render, redirect
 from django.views.generic import View
 
@@ -19,7 +19,7 @@ class Login(View):
             user = authenticate(username=username, password=password)
             if user is not None:
                 login(request, user)
-                return redirect('/success')
+                return redirect('/dashboard', user)
             else:
                 return render(request, 'accounts/login.html', context)
         else:
@@ -40,6 +40,11 @@ class Register(View):
         else:
             context = {'form' : form}
             return render(request,'accounts/register.html', context)
+
+class Logout(View):
+    def get(self, request):
+        logout(request)
+        return redirect('/login')
 
 class Success(View):   
     template = 'accounts/success.html'
