@@ -1,4 +1,29 @@
 <a href="{% url 'accounts-logout' %}"> Logout </a>
 
-{{ user }}
+<br>
+User : {{ user }}
+
+<br>
+<ol>
+    WishList:
+    {% for wish in wishlist %}
+
+        {% for i in wish.item_id.all %}
+            <li>{{ i.itemname }}</li>
+        {% endfor %}
+
+    {% endfor %}
+</ol>
+<br>
+<ol>
+    Other Items:
+    {% for wish in otherlist %}
+
+        {% for i in wish.item_id.all %}
+            <li>{{ i.itemname }}</li>
+        {% endfor %}
+
+    {% endfor %}
+</ol>
 <h1> Wishlist Dashboard!</h1>
+

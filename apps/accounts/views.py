@@ -1,6 +1,8 @@
 from django.contrib.auth import login, authenticate, forms, logout
 from django.shortcuts import render, redirect
 from django.views.generic import View
+from django.db import models
+from apps.wishlist.models import Item, WishList
 
 class Login(View):
     form = forms.AuthenticationForm
@@ -14,12 +16,10 @@ class Login(View):
         if form.is_valid():
             username = form.cleaned_data['username']
             password = form.cleaned_data['password']
-            print username
-            print password
             user = authenticate(username=username, password=password)
             if user is not None:
                 login(request, user)
-                return redirect('/dashboard', user)
+                return redirect('/dashboard')
             else:
                 return render(request, 'accounts/login.html', context)
         else:
